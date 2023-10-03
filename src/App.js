@@ -1,7 +1,25 @@
 import logo from './logo.svg';
 import './App.css';
+import { collection, getDocs } from 'firebase/firestore';
+import { useEffect } from 'react';
+import db from './db';
+
+
 
 function App() {
+  const getData = async () => {
+    const users = collection(db, 'users');
+    const collectionData = await getDocs(users);
+    const data = collectionData.docs.map((doc) => doc.data());
+    console.log(data);
+    return users;
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+
   return (
     <div className="App">
       <header className="App-header">
@@ -15,7 +33,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+
         </a>
       </header>
     </div>
